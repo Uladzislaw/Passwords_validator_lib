@@ -8,4 +8,12 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.FIELD})
 public @interface PasswordWeakness {
+    PasswordStrength strength() default PasswordStrength.WEAK;
+
+    int minSymbols() default 2;
+
+    int maxSymbols() default 256;
+    enum PasswordStrength {
+        WEAK, MEDIUM, HARD, DEVIL
+    }
 }
