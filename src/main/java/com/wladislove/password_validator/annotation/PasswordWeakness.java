@@ -13,6 +13,7 @@ public @interface PasswordWeakness {
     int minSymbols() default 2;
 
     int maxSymbols() default 256;
+
     enum PasswordStrength {
         WEAK, MEDIUM, HARD, DEVIL
     }
