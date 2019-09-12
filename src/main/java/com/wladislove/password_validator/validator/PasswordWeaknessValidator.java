@@ -1,8 +1,14 @@
 package com.wladislove.password_validator.validator;
 
-public class PasswordWeaknessValidator {
+import com.wladislove.password_validator.annotation.PasswordWeakness;
 
-    public boolean calcPasswordStrength(final Class<?> cl, final Object o) {
-        return true;
+class PasswordWeaknessValidator {
+
+    boolean calcPasswordStrength(final Class<?> cl, final Object o) {
+        if (cl.isAnnotationPresent(PasswordWeakness.class)) {
+
+            return true;
+        }
+        throw new IllegalArgumentException("Annotations wasn't found.");
     }
 }
