@@ -28,5 +28,4 @@ public class PasswordValidator {
         return passwordMatcherValidator
                 .validatePassMatching(requireNonNull(object).getClass(), object);
     }
-
 }
