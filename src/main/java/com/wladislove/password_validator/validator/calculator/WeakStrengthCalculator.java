@@ -14,7 +14,7 @@ public class WeakStrengthCalculator extends PasswordStrengthCalculator {
     }
 
     private boolean checkLength(final PasswordWrapper password) {
-        return password.getMinLen() >= password.getPassword().length()
-                && password.getMaxLen() <= password.getPassword().length();
+        return password.getMinLen() <= password.getPassword().length()
+                && password.getMaxLen() >= password.getPassword().length();
     }
 }
