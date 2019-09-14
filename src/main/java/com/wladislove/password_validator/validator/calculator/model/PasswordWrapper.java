@@ -5,6 +5,12 @@ public class PasswordWrapper {
     private int minLen;
     private int maxLen;
 
+    public PasswordWrapper(final String password, final int minLen, final int maxLen) {
+        this.password = password;
+        this.minLen = minLen;
+        this.maxLen = maxLen;
+    }
+
     public String getPassword() {
         return password;
     }
