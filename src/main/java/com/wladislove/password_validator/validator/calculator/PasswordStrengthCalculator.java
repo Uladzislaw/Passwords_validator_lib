@@ -17,4 +17,8 @@ public abstract class PasswordStrengthCalculator {
             nextStrengthCalculator.calculate(password);
         }
     }
+
+    public void setNextStrengthCalculator(final PasswordStrengthCalculator nextStrengthCalculator) {
+        this.nextStrengthCalculator = nextStrengthCalculator;
+    }
 }
