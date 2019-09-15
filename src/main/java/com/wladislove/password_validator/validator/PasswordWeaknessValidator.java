@@ -3,12 +3,7 @@ package com.wladislove.password_validator.validator;
 import com.wladislove.password_validator.annotation.PasswordMatches;
 import com.wladislove.password_validator.annotation.PasswordWeakness;
 import com.wladislove.password_validator.annotation.PasswordWeakness.PasswordStrength;
-import com.wladislove.password_validator.validator.calculator.DevilStrengthCalculator;
-import com.wladislove.password_validator.validator.calculator.HardStrengthCalculator;
-import com.wladislove.password_validator.validator.calculator.MediumStrengthCalculator;
 import com.wladislove.password_validator.validator.calculator.PasswordStrengthCalculator;
-import com.wladislove.password_validator.validator.calculator.WeakStrengthCalculator;
-import com.wladislove.password_validator.validator.calculator.model.PasswordWrapper;
 
 import static com.wladislove.password_validator.reflection.util.ReflectionUtil.accessFieldAndGet;
 
@@ -18,39 +13,16 @@ class PasswordWeaknessValidator {
         if (cl.isAnnotationPresent(PasswordWeakness.class)) {
             PasswordMatches passwordMatches = cl.getAnnotation(PasswordMatches.class);
             PasswordWeakness passwordWeakness = cl.getAnnotation(PasswordWeakness.class);
-            PasswordWrapper passwordWrapper
-                    = new PasswordWrapper(accessFieldAndGet(passwordMatches.password(), cl, o),
-                    passwordWeakness.minSymbols(), passwordWeakness.maxSymbols());
+            String password = accessFieldAndGet(passwordMatches.password(), cl, o);
             PasswordStrength strength = passwordWeakness.strength();
-            PasswordStrengthCalculator strengthCalculator = new WeakStrengthCalculator();
-            switch (strength) {
-                case MEDIUM:
-                    setMediumLevel(strengthCalculator);
-                    break;
-                case HARD:
-                    setHardLevel(strengthCalculator);
-                    break;
-                case DEVIL:
-                    setDevilLevel(strengthCalculator);
-                    break;
-            }
-            strengthCalculator.calculate(passwordWrapper);
-            return true;
+            Long passwordStrength = new PasswordStrengthCalculator()
+                    .calculate(password, passwordWeakness.minSymbols(),
+                            passwordWeakness.maxSymbols());
+            return (strength.equals(PasswordStrength.WEAK) && passwordStrength > 0)
+                    || (strength.equals(PasswordStrength.MEDIUM) && passwordStrength >= 35)
+                    || (strength.equals(PasswordStrength.HARD) && passwordStrength >= 70)
+                    || (strength.equals(PasswordStrength.DEVIL) && passwordStrength >= 80);
         }
         throw new IllegalArgumentException("Annotations wasn't found.");
-    }
-
-    private void setMediumLevel(final PasswordStrengthCalculator strengthCalculator) {
-        strengthCalculator.setNextStrengthCalculator(new MediumStrengthCalculator());
-    }
-
-    private void setHardLevel(final PasswordStrengthCalculator strengthCalculator) {
-        setMediumLevel(strengthCalculator);
-        strengthCalculator.setNextStrengthCalculator(new HardStrengthCalculator());
-    }
-
-    private void setDevilLevel(final PasswordStrengthCalculator strengthCalculator) {
-        setHardLevel(strengthCalculator);
-        strengthCalculator.setNextStrengthCalculator(new DevilStrengthCalculator());
     }
 }

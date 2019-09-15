@@ -1,36 +1,22 @@
 package com.wladislove.password_validator.validator.calculator;
 
+
+import com.wladislove.password_validator.analysis.PasswordAnalizator;
 import com.wladislove.password_validator.validator.calculator.model.PasswordStatistics;
-import com.wladislove.password_validator.validator.calculator.model.PasswordWrapper;
 
-import static java.util.Objects.nonNull;
+public class PasswordStrengthCalculator {
 
-public abstract class PasswordStrengthCalculator {
-
-    private PasswordStrengthCalculator nextStrengthCalculator;
-
-
-    public abstract void calculate(final PasswordWrapper password);
-
-    protected void calculate(final PasswordWrapper password,
-                                      final PasswordStatistics statistics) {
-        throw new UnsupportedOperationException("Operation is not supported by this class");
-    }
-
-    protected void next(final PasswordWrapper password) {
-        if (nonNull(nextStrengthCalculator)) {
-            nextStrengthCalculator.calculate(password);
+    public Long calculate(final String password, final int minLen, final int maxLen) {
+        if (!checkLength(password, minLen, maxLen)) {
+            return 0L;
         }
+        PasswordStatistics statistics = new PasswordAnalizator()
+                .gatherStatistics(password);
+        return 0L;
     }
 
-    protected void next(final PasswordWrapper password,
-                        final PasswordStatistics statistics) {
-        if (nonNull(nextStrengthCalculator)) {
-            nextStrengthCalculator.calculate(password, statistics);
-        }
-    }
-
-    public void setNextStrengthCalculator(final PasswordStrengthCalculator nextStrengthCalculator) {
-        this.nextStrengthCalculator = nextStrengthCalculator;
+    private boolean checkLength(final String password,
+                                final int min, final int max) {
+        return min <= password.length() && max >= password.length();
     }
 }
