@@ -10,9 +10,26 @@ public class PasswordStrengthCalculator {
         if (!checkLength(password, minLen, maxLen)) {
             return 0L;
         }
+        int len = password.length();
         PasswordStatistics statistics = new PasswordAnalizator()
                 .gatherStatistics(password);
-        return 0L;
+        long additions = (long) (statistics.getNumberOfCharacters() * 4)
+                + ((len - statistics.getUpperCaseLetters()) * 2)
+                + ((len - statistics.getLowerCaseLetters()) * 2)
+                + (statistics.getNumbers() * 4)
+                + (statistics.getSymbols() * 6)
+                + (statistics.getRequirements() * 2);
+        long deductions = 0;
+        if (statistics.getLettersOnly()) {
+            deductions += len;
+        } else if (statistics.getNumbersOnly()) {
+            deductions += len;
+        }
+        deductions += statistics.getCaseInsensitiveRepeatChars()
+                + (statistics.getConsecutiveUpperCaseLetters() * 2)
+                + (statistics.getConsecutiveLowerCaseLetters() * 2)
+                + (statistics.getConsecutiveNumbers() * 2);
+        return additions - deductions;
     }
 
     private boolean checkLength(final String password,
