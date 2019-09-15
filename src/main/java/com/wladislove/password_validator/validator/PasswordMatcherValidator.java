@@ -13,6 +13,6 @@ class PasswordMatcherValidator {
             String matchingPassword = accessFieldAndGet(passwordMatches.matchingPassword(), cl, o);
             return password.equals(matchingPassword);
         }
-        throw new IllegalArgumentException("Annotations wasn't found.");
+        return true;
     }
 }

@@ -23,6 +23,6 @@ class PasswordWeaknessValidator {
                     || (strength.equals(PasswordStrength.HARD) && passwordStrength >= 70)
                     || (strength.equals(PasswordStrength.DEVIL) && passwordStrength >= 80);
         }
-        throw new IllegalArgumentException("Annotations wasn't found.");
+        return true;
     }
 }
