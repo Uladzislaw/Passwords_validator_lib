@@ -7,7 +7,7 @@ public class WeakStrengthCalculator extends PasswordStrengthCalculator {
     @Override
     public void calculate(final PasswordWrapper password) {
         if (checkLength(password)) {
-            next();
+            next(password);
             return;
         }
         throw new WeakPasswordException("Password length is invalid.");
