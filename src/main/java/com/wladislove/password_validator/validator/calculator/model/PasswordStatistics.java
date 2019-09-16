@@ -120,4 +120,12 @@ public class PasswordStatistics {
     public void setSequentialLetter(final Integer sequentialLetter) {
         this.sequentialLetter = sequentialLetter;
     }
+
+    public Integer getSequentialNumbers() {
+        return sequentialNumbers;
+    }
+
+    public void setSequentialNumbers(final Integer sequentialNumbers) {
+        this.sequentialNumbers = sequentialNumbers;
+    }
 }

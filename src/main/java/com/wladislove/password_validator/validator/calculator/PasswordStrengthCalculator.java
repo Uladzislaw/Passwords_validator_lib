@@ -28,7 +28,9 @@ public class PasswordStrengthCalculator {
         deductions += statistics.getCaseInsensitiveRepeatChars()
                 + (statistics.getConsecutiveUpperCaseLetters() * 2)
                 + (statistics.getConsecutiveLowerCaseLetters() * 2)
-                + (statistics.getConsecutiveNumbers() * 2);
+                + (statistics.getConsecutiveNumbers() * 2)
+                + (statistics.getSequentialLetter() * 3)
+                + (statistics.getSequentialNumbers() * 3);
         return additions - deductions;
     }
 
