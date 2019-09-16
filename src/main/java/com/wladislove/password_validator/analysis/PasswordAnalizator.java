@@ -2,7 +2,7 @@ package com.wladislove.password_validator.analysis;
 
 import com.wladislove.password_validator.validator.calculator.model.PasswordStatistics;
 
-import static java.lang.Character.isAlphabetic;
+import static java.lang.Character.isDigit;
 import static java.lang.Character.isLowerCase;
 import static java.lang.Character.isUpperCase;
 
@@ -15,6 +15,11 @@ public class PasswordAnalizator {
         statistics.setConsecutiveUpperCaseLetters(calcConsecutiveUpperCaseLetters(password));
         statistics.setConsecutiveLowerCaseLetters(calcConsecutiveLowerCaseLetters(password));
         statistics.setConsecutiveNumbers(calcConsecutiveNumbers(password));
+        statistics.setNumberOfCharacters(password.length());
+        statistics.setUpperCaseLetters((int)password.chars().filter(Character::isUpperCase).count());
+        statistics.setLowerCaseLetters((int)password.chars().filter(Character::isLowerCase).count());
+        statistics.setNumbers((int)password.chars().filter(Character::isDigit).count());
+        statistics.setNumbers((int)password.chars().filter(Character::isDigit).count());
         return statistics;
     }
 
@@ -67,10 +72,10 @@ public class PasswordAnalizator {
         int result = 0;
         for (int i = 0; i < chars.length - 1; i++) {
             boolean isFirst;
-            if (isAlphabetic(chars[i])) { //if alphabetic character - step forward to next letter
+            if (isDigit(chars[i])) { //if alphabetic character - step forward to next letter
                 i++;
                 isFirst = true;
-                while (i < chars.length && isAlphabetic(chars[i])) {
+                while (i < chars.length && isDigit(chars[i])) {
                     if (isFirst) {  //if first - add 2 points to result because of need calc both chars
                         result += 2;
                         isFirst = false;
@@ -83,6 +88,4 @@ public class PasswordAnalizator {
         }
         return result;
     }
-
-
 }
