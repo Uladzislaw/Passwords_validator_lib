@@ -2,6 +2,7 @@ package com.wladislove.password_validator.analysis;
 
 import com.wladislove.password_validator.validator.calculator.model.PasswordStatistics;
 
+import static java.lang.Character.isAlphabetic;
 import static java.lang.Character.isLowerCase;
 import static java.lang.Character.isUpperCase;
 
@@ -12,10 +13,12 @@ public class PasswordAnalizator {
         statistics.setNumbersOnly(password.chars().allMatch(Character::isAlphabetic));
         statistics.setNumberOfCharacters((int)password.chars().distinct().count());
         statistics.setConsecutiveUpperCaseLetters(calcConsecutiveUpperCaseLetters(password));
+        statistics.setConsecutiveLowerCaseLetters(calcConsecutiveLowerCaseLetters(password));
+        statistics.setConsecutiveNumbers(calcConsecutiveNumbers(password));
         return statistics;
     }
 
-    public int calcConsecutiveUpperCaseLetters(final String password) {
+    private int calcConsecutiveUpperCaseLetters(final String password) {
         char[] chars = password.toCharArray();
         int result = 0;
         for (int i = 0; i < chars.length - 1; i++) {
@@ -37,7 +40,7 @@ public class PasswordAnalizator {
         return result;
     }
 
-    public int calcConsecutiveLowerCaseLetters(final String password) {
+    private int calcConsecutiveLowerCaseLetters(final String password) {
         char[] chars = password.toCharArray();
         int result = 0;
         for (int i = 0; i < chars.length - 1; i++) {
@@ -47,6 +50,28 @@ public class PasswordAnalizator {
                 isFirst = true;
                 while (i < chars.length && isLowerCase(chars[i])) {
                     if (isFirst) {  //if first - add 2 points to result because of need calc both letters
+                        result += 2;
+                        isFirst = false;
+                    } else {
+                        result++;
+                    }
+                    i++;
+                }
+            }
+        }
+        return result;
+    }
+
+    private int calcConsecutiveNumbers(final String password) {
+        char[] chars = password.toCharArray();
+        int result = 0;
+        for (int i = 0; i < chars.length - 1; i++) {
+            boolean isFirst;
+            if (isAlphabetic(chars[i])) { //if alphabetic character - step forward to next letter
+                i++;
+                isFirst = true;
+                while (i < chars.length && isAlphabetic(chars[i])) {
+                    if (isFirst) {  //if first - add 2 points to result because of need calc both chars
                         result += 2;
                         isFirst = false;
                     } else {
