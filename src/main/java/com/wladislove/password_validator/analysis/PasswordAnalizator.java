@@ -18,12 +18,12 @@ public class PasswordAnalizator {
         char[] chars = password.toCharArray();
         int result = 0;
         for (int i = 0; i < chars.length - 1; i++) {
-            boolean isFirst = false;
-            if (isUpperCase(chars[i])) {
+            boolean isFirst;
+            if (isUpperCase(chars[i])) { //if uppers case - step forward to next letter
                 i++;
                 isFirst = true;
                 while (i < chars.length && isUpperCase(chars[i])) {
-                    if (isFirst) {
+                    if (isFirst) {  //if first - add 2 points to result because of need calc both letters
                         result += 2;
                         isFirst = false;
                     } else {
