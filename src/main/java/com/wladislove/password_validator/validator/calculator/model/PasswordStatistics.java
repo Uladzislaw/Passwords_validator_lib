@@ -14,8 +14,7 @@ public class PasswordStatistics {
     private Integer consecutiveUpperCaseLetters;
     private Integer consecutiveLowerCaseLetters;
     private Integer consecutiveNumbers;
-    private Integer sequentialLetter;
-    private Integer sequentialNumbers;
+
 
     public Integer getNumberOfCharacters() {
         return numberOfCharacters;
@@ -111,21 +110,5 @@ public class PasswordStatistics {
 
     public void setConsecutiveNumbers(final Integer consecutiveNumbers) {
         this.consecutiveNumbers = consecutiveNumbers;
-    }
-
-    public Integer getSequentialLetter() {
-        return sequentialLetter;
-    }
-
-    public void setSequentialLetter(final Integer sequentialLetter) {
-        this.sequentialLetter = sequentialLetter;
-    }
-
-    public Integer getSequentialNumbers() {
-        return sequentialNumbers;
-    }
-
-    public void setSequentialNumbers(final Integer sequentialNumbers) {
-        this.sequentialNumbers = sequentialNumbers;
     }
 }

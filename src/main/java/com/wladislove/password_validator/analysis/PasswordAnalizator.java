@@ -83,4 +83,6 @@ public class PasswordAnalizator {
         }
         return result;
     }
+
+
 }
