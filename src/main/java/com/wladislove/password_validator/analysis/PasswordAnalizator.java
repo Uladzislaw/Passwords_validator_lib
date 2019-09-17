@@ -57,7 +57,7 @@ public class PasswordAnalizator {
                 i++;
                 isFirst = true;
                 while (i < chars.length && isDigit(chars[i])) {
-                    if (isFirst) {  //if first - add 2 points to result because of need calc both chars
+                    if (isFirst) {
                         result += 1;
                         isFirst = false;
                     } else {
@@ -83,7 +83,7 @@ public class PasswordAnalizator {
                 i++;
                 isFirst = true;
                 while (i < chars.length && isUpperCase(chars[i])) {
-                    if (isFirst) {  //if first - add 2 points to result because of need calc both letters
+                    if (isFirst) {
                         result += 1;
                         isFirst = false;
                     } else {
@@ -105,7 +105,7 @@ public class PasswordAnalizator {
                 i++;
                 isFirst = true;
                 while (i < chars.length && isLowerCase(chars[i])) {
-                    if (isFirst) {  //if first - add 2 points to result because of need calc both letters
+                    if (isFirst) {
                         result += 1;
                         isFirst = false;
                     } else {

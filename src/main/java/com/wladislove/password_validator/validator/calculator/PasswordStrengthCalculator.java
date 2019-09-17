@@ -14,11 +14,17 @@ public class PasswordStrengthCalculator {
         PasswordStatistics statistics = new PasswordAnalizator()
                 .gatherStatistics(password);
         long additions = (long) (statistics.getNumberOfCharacters() * 4)
-                + ((len - statistics.getUpperCaseLetters()) * 2)
-                + ((len - statistics.getLowerCaseLetters()) * 2)
                 + (statistics.getNumbers() * 4)
-                + (statistics.getSymbols() * 6)
-                + (statistics.getRequirements() * 2);
+                + (statistics.getSymbols() * 6);
+        if (statistics.getUpperCaseLetters() > 0) {
+            additions += (len - statistics.getUpperCaseLetters()) * 2;
+        }
+        if (statistics.getLowerCaseLetters() > 0) {
+            additions += (len - statistics.getLowerCaseLetters()) * 2;
+        }
+        if (statistics.getRequirements() > 3) {
+            additions += statistics.getRequirements() * 2;
+        }
         long deductions = 0;
         if (statistics.getLettersOnly()) {
             deductions += len;
